@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Media Notes</string>
+    <string name="notification_title">Reminder</string>
+    <string name="notification_text">Check your notes and stay prepared</string>
+    <string name="motion_detected">Device motion detected</string>
+    <string-array name="priority_options">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+</resources>

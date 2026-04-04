@@ -1,0 +1,25 @@
+# Android/Gradle
+.gradle/
+**/build/
+/captures/
+.externalNativeBuild/
+.cxx/
+
+# Local SDK config
+local.properties
+
+# IDE files
+.idea/
+*.iml
+
+# Signing files
+*.jks
+*.keystore
+
+# Local DB exports/dumps
+*.db
+*.db-journal
+
+# OS files
+.DS_Store
+Thumbs.db
