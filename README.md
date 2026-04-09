@@ -15,7 +15,7 @@ Android app for Assignment 2: save notes with images, view them in a list, get p
 
 - Roll number: `58`
 - `58 % 4 = 1` -> extra DB field: `Reminder Flag`
-- `58 % 3 = 2` -> notification text: `Time to complete your reminder`
+- `58 % 3 = 2` -> notification text: `Time to read your notes`
 
 ## Features
 
@@ -31,15 +31,15 @@ Android app for Assignment 2: save notes with images, view them in a list, get p
 
 ## Database
 
-- DB name: `NotesDB_53`
-- Table name: `notes_53`
+- DB name: `NotesDB_58`
+- Table name: `notes_58`
 - Columns:
   - `id` (INTEGER PRIMARY KEY AUTOINCREMENT)
   - `title` (TEXT NOT NULL)
   - `description` (TEXT)
   - `image_path` (TEXT)
   - `date` (TEXT)
-  - `priority` (TEXT)
+  - `reminder_flag` (TEXT)
 
 ## Project Structure
 
@@ -74,4 +74,4 @@ Android app for Assignment 2: save notes with images, view them in a list, get p
 
 - Notification appears only if at least one note exists in DB.
 - WorkManager timing is approximate and may be delayed by Android battery optimizations.
-- SQLite journal file (e.g., `NotesDB_53-journal`) is expected behavior.
+- SQLite journal file (e.g., `NotesDB_58-journal`) is expected behavior.
