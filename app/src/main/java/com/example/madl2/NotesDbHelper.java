@@ -23,7 +23,7 @@ public class NotesDbHelper extends SQLiteOpenHelper {
                 + AppConstants.COL_DESCRIPTION + " TEXT, "
                 + AppConstants.COL_IMAGE_PATH + " TEXT, "
                 + AppConstants.COL_DATE + " TEXT, "
-                + AppConstants.COL_PRIORITY + " TEXT)";
+                + AppConstants.COL_REMINDER_FLAG + " TEXT)";
         db.execSQL(createTable);
     }
 
@@ -40,7 +40,7 @@ public class NotesDbHelper extends SQLiteOpenHelper {
         values.put(AppConstants.COL_DESCRIPTION, note.getDescription());
         values.put(AppConstants.COL_IMAGE_PATH, note.getImagePath());
         values.put(AppConstants.COL_DATE, note.getDate());
-        values.put(AppConstants.COL_PRIORITY, note.getPriority());
+        values.put(AppConstants.COL_REMINDER_FLAG, note.getReminderFlag());
         return db.insert(AppConstants.TABLE_NAME, null, values);
     }
 
@@ -64,7 +64,7 @@ public class NotesDbHelper extends SQLiteOpenHelper {
                 note.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(AppConstants.COL_DESCRIPTION)));
                 note.setImagePath(cursor.getString(cursor.getColumnIndexOrThrow(AppConstants.COL_IMAGE_PATH)));
                 note.setDate(cursor.getString(cursor.getColumnIndexOrThrow(AppConstants.COL_DATE)));
-                note.setPriority(cursor.getString(cursor.getColumnIndexOrThrow(AppConstants.COL_PRIORITY)));
+                note.setReminderFlag(cursor.getString(cursor.getColumnIndexOrThrow(AppConstants.COL_REMINDER_FLAG)));
                 notes.add(note);
             }
             cursor.close();

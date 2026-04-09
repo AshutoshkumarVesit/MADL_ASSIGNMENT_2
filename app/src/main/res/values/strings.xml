@@ -3,9 +3,8 @@
     <string name="notification_title">Reminder</string>
     <string name="notification_text">Check your notes and stay prepared</string>
     <string name="motion_detected">Device motion detected</string>
-    <string-array name="priority_options">
-        <item>Low</item>
-        <item>Medium</item>
-        <item>High</item>
+    <string-array name="reminder_flag_options">
+        <item>Yes</item>
+        <item>No</item>
     </string-array>
 </resources>

@@ -26,7 +26,10 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -35,12 +38,13 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
     private EditText etTitle;
     private EditText etDescription;
-    private Spinner spPriority;
+    private Spinner spReminderFlag;
     private ImageView ivSelected;
     private NotesDbHelper notesDbHelper;
 
     private Uri cameraImageUri;
     private String selectedImagePath;
+    private String pendingCameraImagePath;
 
     private ActivityResultLauncher<String> requestCameraPermissionLauncher;
     private ActivityResultLauncher<String> requestNotificationPermissionLauncher;
@@ -56,13 +60,13 @@ public class MainActivity extends AppCompatActivity {
 
         etTitle = findViewById(R.id.etTitle);
         etDescription = findViewById(R.id.etDescription);
-        spPriority = findViewById(R.id.spPriority);
+        spReminderFlag = findViewById(R.id.spReminderFlag);
         ivSelected = findViewById(R.id.ivSelected);
         Button btnMedia = findViewById(R.id.btnMedia);
         Button btnSave = findViewById(R.id.btnSave);
         Button btnView = findViewById(R.id.btnView);
 
-        setupPrioritySpinner();
+        setupReminderFlagSpinner();
         setupActivityResultLaunchers();
         requestNotificationPermissionIfRequired();
         enqueuePeriodicReminder();
@@ -75,13 +79,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setupPrioritySpinner() {
+    private void setupReminderFlagSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
-                R.array.priority_options,
+                R.array.reminder_flag_options,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spPriority.setAdapter(adapter);
+        spReminderFlag.setAdapter(adapter);
     }
 
     private void setupActivityResultLaunchers() {
@@ -104,9 +108,13 @@ public class MainActivity extends AppCompatActivity {
         takePictureLauncher = registerForActivityResult(
                 new ActivityResultContracts.TakePicture(),
                 isSuccess -> {
-                    if (isSuccess && cameraImageUri != null) {
-                        selectedImagePath = cameraImageUri.toString();
-                        ivSelected.setImageURI(cameraImageUri);
+                    if (isSuccess && !TextUtils.isEmpty(pendingCameraImagePath)) {
+                        Uri localFileUri = Uri.fromFile(new File(pendingCameraImagePath));
+                        selectedImagePath = localFileUri.toString();
+                        ivSelected.setImageURI(null);
+                        ivSelected.setImageURI(localFileUri);
+                    } else {
+                        pendingCameraImagePath = null;
                     }
                 });
 
@@ -121,8 +129,16 @@ public class MainActivity extends AppCompatActivity {
                         } catch (SecurityException ignored) {
                             // Some providers do not support persistent grants.
                         }
-                        selectedImagePath = uri.toString();
-                        ivSelected.setImageURI(uri);
+
+                        String copiedImagePath = copySelectedImageToAppStorage(uri);
+                        if (!TextUtils.isEmpty(copiedImagePath)) {
+                            Uri localFileUri = Uri.fromFile(new File(copiedImagePath));
+                            selectedImagePath = localFileUri.toString();
+                            ivSelected.setImageURI(null);
+                            ivSelected.setImageURI(localFileUri);
+                        } else {
+                            Toast.makeText(this, "Unable to load selected image", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
@@ -149,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
     private void launchCameraCapture() {
         try {
             File imageFile = createImageFile();
+            pendingCameraImagePath = imageFile.getAbsolutePath();
             cameraImageUri = FileProvider.getUriForFile(
                     this,
                     getPackageName() + ".fileprovider",
@@ -156,6 +173,31 @@ public class MainActivity extends AppCompatActivity {
             takePictureLauncher.launch(cameraImageUri);
         } catch (IOException exception) {
             Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String copySelectedImageToAppStorage(Uri sourceUri) {
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (storageDir == null) {
+            return null;
+        }
+
+        File destinationFile = new File(storageDir, "selected_" + System.currentTimeMillis() + ".jpg");
+        try (InputStream inputStream = getContentResolver().openInputStream(sourceUri);
+                OutputStream outputStream = new FileOutputStream(destinationFile)) {
+            if (inputStream == null) {
+                return null;
+            }
+
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            outputStream.flush();
+            return destinationFile.getAbsolutePath();
+        } catch (IOException exception) {
+            return null;
         }
     }
 
@@ -176,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         String description = etDescription.getText().toString().trim();
-        String priority = String.valueOf(spPriority.getSelectedItem());
+        String reminderFlag = String.valueOf(spReminderFlag.getSelectedItem());
         String date = new SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(new Date());
 
         Note note = new Note();
@@ -184,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
         note.setDescription(description);
         note.setImagePath(selectedImagePath);
         note.setDate(date);
-        note.setPriority(priority);
+        note.setReminderFlag(reminderFlag);
 
         long rowId = notesDbHelper.insertNote(note);
         if (rowId > 0) {
@@ -198,9 +240,10 @@ public class MainActivity extends AppCompatActivity {
     private void clearForm() {
         etTitle.setText("");
         etDescription.setText("");
-        spPriority.setSelection(0);
+        spReminderFlag.setSelection(0);
         selectedImagePath = null;
         cameraImageUri = null;
+        pendingCameraImagePath = null;
         ivSelected.setImageDrawable(null);
     }
 

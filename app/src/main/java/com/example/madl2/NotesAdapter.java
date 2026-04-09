@@ -35,13 +35,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         Note note = notes.get(position);
         holder.tvTitle.setText(note.getTitle());
         holder.tvDescription.setText(note.getDescription());
-        holder.tvPriority.setText("Priority: " + note.getPriority());
+        holder.tvReminderFlag.setText("Reminder Flag: " + note.getReminderFlag());
         holder.tvDate.setText(note.getDate());
 
         String imagePath = note.getImagePath();
         if (!TextUtils.isEmpty(imagePath)) {
             try {
                 holder.ivNoteImage.setVisibility(View.VISIBLE);
+                holder.ivNoteImage.setImageURI(null);
                 holder.ivNoteImage.setImageURI(Uri.parse(imagePath));
             } catch (Exception exception) {
                 holder.ivNoteImage.setVisibility(View.GONE);
@@ -61,7 +62,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     static class NoteViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvTitle;
         private final TextView tvDescription;
-        private final TextView tvPriority;
+        private final TextView tvReminderFlag;
         private final TextView tvDate;
         private final ImageView ivNoteImage;
 
@@ -69,7 +70,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvDescription = itemView.findViewById(R.id.tvDescription);
-            tvPriority = itemView.findViewById(R.id.tvPriority);
+            tvReminderFlag = itemView.findViewById(R.id.tvReminderFlag);
             tvDate = itemView.findViewById(R.id.tvDate);
             ivNoteImage = itemView.findViewById(R.id.ivNoteImage);
         }

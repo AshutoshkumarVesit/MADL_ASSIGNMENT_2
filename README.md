@@ -1,4 +1,4 @@
-# Media Notes App (Roll No: 53)
+# Media Notes App (Roll No: 58)
 
 Android app for Assignment 2: save notes with images, view them in a list, get periodic reminders, and use accelerometer shake detection.
 
@@ -13,9 +13,9 @@ Android app for Assignment 2: save notes with images, view them in a list, get p
 
 ## Assignment Mapping
 
-- Roll number: `53`
-- `53 % 4 = 1` -> extra DB field: `priority`
-- `53 % 3 = 2` -> notification text: `Check your notes and stay prepared`
+- Roll number: `58`
+- `58 % 4 = 1` -> extra DB field: `Reminder Flag`
+- `58 % 3 = 2` -> notification text: `Time to complete your reminder`
 
 ## Features
 

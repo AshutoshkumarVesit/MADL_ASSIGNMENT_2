@@ -2,11 +2,19 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="keep_background">#FFF8E7</color>
-    <color name="keep_card_bg">#FFFFFDF5</color>
-    <color name="keep_card_stroke">#FFE8DCB6</color>
-    <color name="keep_text_primary">#FF2A2217</color>
-    <color name="keep_text_secondary">#FF756954</color>
-    <color name="keep_action_yellow">#FFFAD66A</color>
-    <color name="keep_preview_bg">#FFF3EAD0</color>
+
+    <color name="keep_background">#FF0D1B2A</color>
+    <color name="keep_card_bg">#FF1B263B</color>
+    <color name="keep_card_stroke">#FF415A77</color>
+    <color name="keep_text_primary">#FFE0E1DD</color>
+    <color name="keep_text_secondary">#FF778DA9</color>
+    <color name="keep_action_yellow">#FFFFC107</color>
+
+    <color name="ocean_background">#FF0D1B2A</color>
+    <color name="ocean_card_bg">#FF1B263B</color>
+    <color name="ocean_card_stroke">#FF415A77</color>
+    <color name="ocean_text_primary">#FFE0E1DD</color>
+    <color name="ocean_text_secondary">#FF778DA9</color>
+    <color name="ocean_accent">#FF00E5FF</color>
+    <color name="ocean_preview_bg">#FF1B263B</color>
 </resources>

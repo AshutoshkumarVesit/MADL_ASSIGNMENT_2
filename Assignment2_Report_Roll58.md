@@ -1,7 +1,7 @@
 # Assignment 2 Report - Media Notes App with Sensor and Notification
 
 Name: ____________________  
-Roll Number: 53  
+Roll Number: 58  
 Course: MAD Lab / Android Development  
 Submission Date: 6 April 2026
 
@@ -19,7 +19,7 @@ The objective of this assignment is to develop an Android mobile application tha
 6. Show reminder notifications based on roll-number logic.
 7. Use accelerometer sensor input to trigger an in-app action.
 
-The developed app satisfies these requirements and is implemented for roll number 53.
+The developed app satisfies these requirements and is implemented for roll number 58.
 
 ---
 
@@ -27,10 +27,10 @@ The developed app satisfies these requirements and is implemented for roll numbe
 
 The assignment requires a media note-taking app that stores title, description, media path, and date in SQLite, includes one personalized field based on roll number, and reminds users periodically with notifications.
 
-For roll number 53:
+For roll number 58:
 
-- 53 % 4 = 1 -> extra database field is priority.
-- 53 % 3 = 2 -> notification message is: Check your notes and stay prepared.
+- 58 % 4 = 1 -> extra database field is reminder_flag.
+- 58 % 3 = 2 -> notification message is: Time to read your notes.
 
 ---
 
@@ -45,7 +45,7 @@ The main screen provides:
 
 - Note Title input
 - Note Description input
-- Priority selector (extra field for roll 53)
+- Reminder Flag selector (extra field for roll 58)
 - Capture Image / Select Image action
 - Save Note button
 - View Notes button
@@ -60,8 +60,8 @@ The View Notes screen displays all saved notes in a RecyclerView card-style layo
 
 As required by the assignment:
 
-- Database name: NotesDB_53
-- Table name: notes_53
+- Database name: NotesDB_58
+- Table name: notes_58
 
 ### 4.2 Table Fields
 
@@ -72,19 +72,19 @@ The app stores each note with these columns:
 3. description (TEXT)
 4. image_path (TEXT)
 5. date (TEXT)
-6. priority (TEXT)  <- personalized field for roll 53
+6. reminder_flag (TEXT)  <- personalized field for roll 58
 
 ### 4.3 Table Creation Query
 
 The table is created using this SQL structure:
 
-CREATE TABLE notes_53 (
+CREATE TABLE notes_58 (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   title TEXT NOT NULL,
   description TEXT,
   image_path TEXT,
   date TEXT,
-  priority TEXT
+  reminder_flag TEXT
 )
 
 ### 4.4 Database Operations Implemented
@@ -126,7 +126,7 @@ Each note item card shows:
 
 - Title
 - Description
-- Priority
+- Reminder Flag
 - Date/time
 - Thumbnail image (if image_path exists)
 
@@ -168,17 +168,17 @@ WorkManager is chosen because it is lifecycle-aware, reliable for deferred backg
 
 A notification channel is created for Android 8+ devices to ensure reminders are delivered correctly.
 
-### 8.2 Message Rule for Roll 53
+### 8.2 Message Rule for Roll 58
 
 By assignment rule:
 
-- 53 % 3 = 2
-- Notification message: Check your notes and stay prepared
+- 58 % 3 = 2
+- Notification message: Time to read your notes
 
 ### 8.3 Notification Content
 
 - Title: Reminder
-- Text: Check your notes and stay prepared
+- Text: Time to read your notes
 - Tap action: opens notes list screen
 
 This fulfills the roll-dependent notification requirement.
@@ -205,7 +205,7 @@ This satisfies the assignment requirement of sensor-based interaction.
 The following validations were performed:
 
 1. App compiles and installs in debug mode.
-2. Note save flow works with title, description, priority, image path, and date.
+2. Note save flow works with title, description, reminder_flag, image path, and date.
 3. Notes are retrieved and listed through RecyclerView.
 4. Background worker schedules periodically.
 5. Notification appears when notes exist and permission is granted.
@@ -219,7 +219,7 @@ Insert the following screenshots in the final Google Doc under this section.
 
 ### Figure 1: Main UI
 
-- Show note title, description, priority, and all three buttons.
+- Show note title, description, reminder_flag, and all three buttons.
 - Suggested caption: Main screen with note input and actions.
 
 ### Figure 2: Media Handling
@@ -245,13 +245,13 @@ Insert the following screenshots in the final Google Doc under this section.
 ### Figure 6: Database Evidence (Optional but Recommended)
 
 - Show table contents from Database Inspector / Device Explorer.
-- Suggested caption: SQLite table notes_53 with stored note records.
+- Suggested caption: SQLite table notes_58 with stored note records.
 
 ---
 
 ## 12. Conclusion
 
-The Media Notes application was successfully implemented according to assignment requirements for roll number 53. The app combines local data storage, media attachment, RecyclerView display, periodic WorkManager reminders, and accelerometer-based interaction in a complete Android workflow.
+The Media Notes application was successfully implemented according to assignment requirements for roll number 58. The app combines local data storage, media attachment, RecyclerView display, periodic WorkManager reminders, and accelerometer-based interaction in a complete Android workflow.
 
 The implementation demonstrates practical use of:
 

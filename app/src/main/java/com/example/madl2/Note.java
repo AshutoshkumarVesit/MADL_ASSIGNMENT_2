@@ -6,18 +6,18 @@ public class Note {
     private String description;
     private String imagePath;
     private String date;
-    private String priority;
+    private String reminderFlag;
 
     public Note() {
     }
 
-    public Note(long id, String title, String description, String imagePath, String date, String priority) {
+    public Note(long id, String title, String description, String imagePath, String date, String reminderFlag) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.imagePath = imagePath;
         this.date = date;
-        this.priority = priority;
+        this.reminderFlag = reminderFlag;
     }
 
     public long getId() {
@@ -60,11 +60,11 @@ public class Note {
         this.date = date;
     }
 
-    public String getPriority() {
-        return priority;
+    public String getReminderFlag() {
+        return reminderFlag;
     }
 
-    public void setPriority(String priority) {
-        this.priority = priority;
+    public void setReminderFlag(String reminderFlag) {
+        this.reminderFlag = reminderFlag;
     }
 }
